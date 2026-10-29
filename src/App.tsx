@@ -205,11 +205,13 @@ export default function App() {
 
   return (
     <AppContext.Provider value={ctx}>
-      <div className={`app ${focus ? 'focus' : ''}`} data-l={S.cur}>
-        {!focus && <Header onSettings={() => setSheet(true)} />}
-        <main id="view">{screen}</main>
+      <div className={`shell ${focus ? '' : 'has-nav'}`}>
+        {!focus && <Tabs active={route.name as TabName} onChange={goTab} />}
+        <div className={`app ${focus ? 'focus' : ''}`} data-l={S.cur}>
+          {!focus && <Header onSettings={() => setSheet(true)} />}
+          <main id="view">{screen}</main>
+        </div>
       </div>
-      {!focus && <Tabs active={route.name as TabName} onChange={goTab} />}
       {sheet && (
         <SettingsSheet
           onClose={() => setSheet(false)}
