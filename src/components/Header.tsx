@@ -13,7 +13,7 @@ export function Header({ onSettings }: { onSettings: () => void }) {
           <i>中</i>
           <i>あ</i>
         </span>
-        <span>Ba Ngữ</span>
+        <span>Ngoại Ngữ</span>
       </div>
       <div className="seg" aria-label="Ngôn ngữ đang học">
         {S.profile.langs.map((l) => (

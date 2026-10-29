@@ -1,4 +1,4 @@
-# Ba Ngữ
+# Ngoại Ngữ
 
 Web học tiếng Anh, tiếng Trung và tiếng Nhật cho người Việt. React 18 + Vite + TypeScript, không cần backend.
 

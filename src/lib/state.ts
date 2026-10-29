@@ -2,7 +2,9 @@ import { COURSE, WORDS } from '../data/course';
 import type { AppState, Lang, Profile, Unit } from '../types';
 import { DAY, dayKey } from './util';
 
-const KEY = 'bangu.v1';
+const KEY = 'ngoaingu.v1';
+/** Khóa của tên cũ "Ba Ngữ": đọc một lần để không mất tiến độ */
+const LEGACY_KEY = 'bangu.v1';
 
 export function baseState(profile: Profile): AppState {
   return {
@@ -39,7 +41,7 @@ export function demoState(): AppState {
 
 export function loadState(): AppState | null {
   try {
-    const raw = localStorage.getItem(KEY);
+    const raw = localStorage.getItem(KEY) ?? localStorage.getItem(LEGACY_KEY);
     if (!raw) return null;
     const s = JSON.parse(raw) as AppState;
     if (!s?.profile?.langs?.length) return null;
@@ -53,6 +55,7 @@ export function loadState(): AppState | null {
 export function saveState(s: AppState) {
   try {
     localStorage.setItem(KEY, JSON.stringify(s));
+    localStorage.removeItem(LEGACY_KEY);
   } catch {
     /* bộ nhớ trình duyệt bị chặn: app vẫn chạy, chỉ không lưu */
   }
@@ -61,6 +64,7 @@ export function saveState(s: AppState) {
 export function clearState() {
   try {
     localStorage.removeItem(KEY);
+    localStorage.removeItem(LEGACY_KEY);
   } catch {
     /* bỏ qua */
   }

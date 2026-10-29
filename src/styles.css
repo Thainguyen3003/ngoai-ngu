@@ -1,4 +1,4 @@
-/* Ba Ngữ — Layout: một cột hẹp như cuốn vở, thanh tab ở đáy; mỗi ngôn ngữ một màu mực; chữ Hán/Nhật nằm trong ô 田字格, chữ Latin trên vở 4 ô li */
+/* Ngoại Ngữ — Layout: một cột hẹp như cuốn vở, thanh tab ở đáy; mỗi ngôn ngữ một màu mực; chữ Hán/Nhật nằm trong ô 田字格, chữ Latin trên vở 4 ô li */
 :root{
   --paper:#F2F4F8; --surface:#FFFFFF; --sunk:#E7EBF2; --ink:#161A2A; --muted:#5B6479; --line:#D6DCE7;
   --en:#0A7A71; --zh:#C0352A; --ja:#4A3DB0; --on-accent:#FFFFFF;
