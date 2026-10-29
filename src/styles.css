@@ -343,3 +343,8 @@ input[type="range"]{accent-color:var(--accent);width:150px}
 @keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
 @keyframes up{from{transform:translateY(30px);opacity:.4}to{transform:none;opacity:1}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+.err{color:var(--bad);font-weight:600;font-size:14px}
+.confirm:not(:has(.danger)){background:var(--accent-soft)}
+.hist{margin-top:10px}
+.hist .dw b{font-weight:700}
+.hist-empty{margin-top:6px}

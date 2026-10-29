@@ -1,8 +1,8 @@
 import { IconFlame } from '../components/Icons';
-import { LANGS, totalWords } from '../data/course';
+import { LANGS, totalWords, unitById } from '../data/course';
 import { dueLabel } from '../lib/srs';
 import { dueIds, learnedCount, nextUnit, streakNow, todayXp } from '../lib/state';
-import { DAY, WEEKDAYS, WEEKDAYS_SHORT, dayKey } from '../lib/util';
+import { DAY, WEEKDAYS, WEEKDAYS_SHORT, dayKey, fmtTime, pad } from '../lib/util';
 import { useApp } from '../store';
 import type { Unit } from '../types';
 
@@ -32,6 +32,7 @@ export function Home({ onStartUnit, onReview, onTab, onFreshStart }: Props) {
     return { k: dayKey(t), x: S.xp[dayKey(t)] || 0, wd: new Date(t).getDay(), today: i === 6 };
   });
   const max = Math.max(goal, ...days.map((d) => d.x));
+  const recent = S.history.filter((h) => h.lang === L).slice(0, 5);
 
   let nextDue = '';
   if (!due) {
@@ -157,6 +158,36 @@ export function Home({ onStartUnit, onReview, onTab, onFreshStart }: Props) {
             <em>mục tiêu</em>
           </div>
         </div>
+      </section>
+
+      <section>
+        <div className="sec-h">
+          <h2>Kết quả gần đây</h2>
+          {recent.length > 0 && <span className="muted">{S.history.filter((h) => h.lang === L).length} lần học</span>}
+        </div>
+        {recent.length ? (
+          <ul className="dlist hist">
+            {recent.map((h) => {
+              const u = h.unit ? unitById(L, h.unit) : undefined;
+              const d = new Date(h.at);
+              const tone = h.acc >= 80 ? '' : h.acc >= 50 ? 'mid' : 'bad';
+              return (
+                <li key={h.at}>
+                  <span className="dw">
+                    <b>{h.kind === 'lesson' ? `Bài ${u?.n ?? '?'} · ${u?.title ?? h.unit}` : `Ôn tập ${h.words} thẻ`}</b>
+                  </span>
+                  <span className="dm">
+                    {d.getDate()}/{d.getMonth() + 1} lúc {pad(d.getHours())}:{pad(d.getMinutes())} · {fmtTime(h.ms)}
+                  </span>
+                  <span className={`tag ${tone}`}>{h.acc}%</span>
+                  <span className="dd">+{h.xp} XP</span>
+                </li>
+              );
+            })}
+          </ul>
+        ) : (
+          <p className="muted hist-empty">Học xong một bài hoặc một phiên ôn tập, kết quả sẽ được ghi lại ở đây.</p>
+        )}
       </section>
 
       <section>

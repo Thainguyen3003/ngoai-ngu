@@ -1,0 +1,190 @@
+{
+  "lang": "ja",
+  "units": [
+    {
+      "id": "u1",
+      "title": "Chào hỏi",
+      "words": [
+        {
+          "w": "こんにちは",
+          "r": "",
+          "m": "xin chào",
+          "ex": "こんにちは、|先生。",
+          "exR": "Konnichiwa, sensei.",
+          "exM": "Em chào thầy/cô.",
+          "ro": "konnichiwa"
+        },
+        {
+          "w": "ありがとう",
+          "r": "",
+          "m": "cảm ơn",
+          "ex": "ありがとう|ございます。",
+          "exR": "Arigatō gozaimasu.",
+          "exM": "Cảm ơn rất nhiều.",
+          "ro": "arigatō"
+        },
+        {
+          "w": "さようなら",
+          "r": "",
+          "m": "tạm biệt",
+          "ex": "さようなら、|また|明日。",
+          "exR": "Sayōnara, mata ashita.",
+          "exM": "Tạm biệt, hẹn mai gặp lại.",
+          "ro": "sayōnara"
+        },
+        {
+          "w": "すみません",
+          "r": "",
+          "m": "xin lỗi",
+          "ex": "すみません、|駅は|どこ|ですか。",
+          "exR": "Sumimasen, eki wa doko desu ka.",
+          "exM": "Xin lỗi, nhà ga ở đâu ạ?",
+          "ro": "sumimasen"
+        },
+        {
+          "w": "友達",
+          "r": "ともだち",
+          "m": "bạn bè",
+          "ex": "友達と|話します。",
+          "exR": "Tomodachi to hanashimasu.",
+          "exM": "Tôi nói chuyện với bạn bè.",
+          "ro": "tomodachi"
+        },
+        {
+          "w": "先生",
+          "r": "せんせい",
+          "m": "giáo viên",
+          "ex": "先生は|優しい|です。",
+          "exR": "Sensei wa yasashii desu.",
+          "exM": "Thầy/cô rất hiền.",
+          "ro": "sensei"
+        }
+      ]
+    },
+    {
+      "id": "u2",
+      "title": "Ăn uống",
+      "words": [
+        {
+          "w": "水",
+          "r": "みず",
+          "m": "nước",
+          "ex": "水を|飲みます。",
+          "exR": "Mizu o nomimasu.",
+          "exM": "Tôi uống nước.",
+          "ro": "mizu"
+        },
+        {
+          "w": "ご飯",
+          "r": "ごはん",
+          "m": "cơm",
+          "ex": "ご飯を|食べます。",
+          "exR": "Gohan o tabemasu.",
+          "exM": "Tôi ăn cơm.",
+          "ro": "gohan"
+        },
+        {
+          "w": "お茶",
+          "r": "おちゃ",
+          "m": "trà",
+          "ex": "お茶を|ください。",
+          "exR": "Ocha o kudasai.",
+          "exM": "Cho tôi trà.",
+          "ro": "ocha"
+        },
+        {
+          "w": "食べる",
+          "r": "たべる",
+          "m": "ăn",
+          "ex": "パンを|食べる。",
+          "exR": "Pan o taberu.",
+          "exM": "Ăn bánh mì.",
+          "ro": "taberu"
+        },
+        {
+          "w": "飲む",
+          "r": "のむ",
+          "m": "uống",
+          "ex": "コーヒーを|飲む。",
+          "exR": "Kōhī o nomu.",
+          "exM": "Uống cà phê.",
+          "ro": "nomu"
+        },
+        {
+          "w": "おいしい",
+          "r": "",
+          "m": "ngon",
+          "ex": "この|ラーメンは|おいしい。",
+          "exR": "Kono rāmen wa oishii.",
+          "exM": "Mì ramen này ngon.",
+          "ro": "oishii"
+        }
+      ]
+    },
+    {
+      "id": "u3",
+      "title": "Gia đình",
+      "words": [
+        {
+          "w": "母",
+          "r": "はは",
+          "m": "mẹ (của mình)",
+          "ex": "母は|先生|です。",
+          "exR": "Haha wa sensei desu.",
+          "exM": "Mẹ tôi là giáo viên.",
+          "ro": "haha"
+        },
+        {
+          "w": "父",
+          "r": "ちち",
+          "m": "bố (của mình)",
+          "ex": "父は|会社員|です。",
+          "exR": "Chichi wa kaishain desu.",
+          "exM": "Bố tôi là nhân viên công ty.",
+          "ro": "chichi"
+        },
+        {
+          "w": "兄",
+          "r": "あに",
+          "m": "anh trai (của mình)",
+          "ex": "兄は|東京に|います。",
+          "exR": "Ani wa Tōkyō ni imasu.",
+          "exM": "Anh trai tôi ở Tokyo.",
+          "ro": "ani"
+        },
+        {
+          "w": "姉",
+          "r": "あね",
+          "m": "chị gái (của mình)",
+          "ex": "姉は|学生|です。",
+          "exR": "Ane wa gakusei desu.",
+          "exM": "Chị gái tôi là sinh viên.",
+          "ro": "ane"
+        },
+        {
+          "w": "家族",
+          "r": "かぞく",
+          "m": "gia đình",
+          "ex": "家族は|四人|です。",
+          "exR": "Kazoku wa yonin desu.",
+          "exM": "Gia đình tôi có bốn người.",
+          "ro": "kazoku"
+        },
+        {
+          "w": "家",
+          "r": "いえ",
+          "m": "nhà",
+          "ex": "家に|帰ります。",
+          "exR": "Ie ni kaerimasu.",
+          "exM": "Tôi về nhà.",
+          "ro": "ie"
+        }
+      ]
+    },
+    {
+      "id": "u4",
+      "title": "Số đếm",
+      "words": []
+    }
+  ]
+}

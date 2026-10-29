@@ -49,6 +49,23 @@ export interface Settings {
   rate: number;
 }
 
+/** Một lần học xong bài hoặc xong phiên ôn tập */
+export interface HistoryEntry {
+  /** Thời điểm kết thúc (ms) */
+  at: number;
+  kind: 'lesson' | 'review';
+  lang: Lang;
+  /** Id bài (chỉ với kind = lesson) */
+  unit?: string;
+  /** Tỉ lệ đúng / nhớ tốt, 0–100 */
+  acc: number;
+  xp: number;
+  /** Số từ trong bài hoặc số thẻ đã ôn */
+  words: number;
+  /** Thời lượng (ms) */
+  ms: number;
+}
+
 export interface AppState {
   v: 1;
   profile: Profile;
@@ -59,6 +76,8 @@ export interface AppState {
   done: Record<Lang, string[]>;
   srs: Record<string, Card>;
   settings: Settings;
+  /** Mới nhất ở đầu, giữ tối đa HISTORY_MAX mục */
+  history: HistoryEntry[];
 }
 
 export interface LessonResult {

@@ -1,5 +1,5 @@
 import { COURSE, WORDS } from '../data/course';
-import type { AppState, Lang, Profile, Unit } from '../types';
+import type { AppState, HistoryEntry, Lang, Profile, Unit } from '../types';
 import { DAY, dayKey } from './util';
 
 const KEY = 'ngoaingu.v1';
@@ -16,6 +16,7 @@ export function baseState(profile: Profile): AppState {
     done: { en: [], zh: [], ja: [] },
     srs: {},
     settings: { reading: true, rate: 0.9 },
+    history: [],
   };
 }
 
@@ -39,17 +40,87 @@ export function demoState(): AppState {
   return s;
 }
 
+export const HISTORY_MAX = 300;
+
+const LANG_SET: Lang[] = ['en', 'zh', 'ja'];
+const isObj = (x: unknown): x is Record<string, unknown> => typeof x === 'object' && x !== null && !Array.isArray(x);
+
+/**
+ * Kiểm tra và bổ sung các trường còn thiếu cho state đọc từ localStorage hoặc từ file sao lưu
+ * (kể cả bản lưu từ phiên bản cũ chưa có history). Ném lỗi kèm lý do nếu dữ liệu không dùng được.
+ */
+export function normalizeState(raw: unknown): AppState {
+  if (!isObj(raw) || !isObj(raw.profile)) throw new Error('Thiếu thông tin hồ sơ học');
+  const p = raw.profile;
+  const langs = Array.isArray(p.langs) ? LANG_SET.filter((l) => (p.langs as unknown[]).includes(l)) : [];
+  if (!langs.length) throw new Error('Hồ sơ không có ngôn ngữ nào');
+
+  const s = baseState({
+    langs,
+    goalXp: typeof p.goalXp === 'number' && p.goalXp > 0 ? p.goalXp : 40,
+    level: typeof p.level === 'string' ? p.level : null,
+    reason: typeof p.reason === 'string' ? p.reason : null,
+    demo: p.demo === true,
+  });
+  s.cur = langs.includes(raw.cur as Lang) ? (raw.cur as Lang) : langs[0];
+
+  if (isObj(raw.xp)) for (const [k, v] of Object.entries(raw.xp)) if (typeof v === 'number') s.xp[k] = v;
+  if (isObj(raw.streak) && typeof raw.streak.count === 'number')
+    s.streak = { count: raw.streak.count, last: typeof raw.streak.last === 'string' ? raw.streak.last : null };
+  if (isObj(raw.done))
+    for (const l of LANG_SET) {
+      const d = raw.done[l];
+      if (Array.isArray(d)) s.done[l] = d.filter((x): x is string => typeof x === 'string');
+    }
+  if (isObj(raw.srs))
+    for (const [id, c] of Object.entries(raw.srs))
+      if (isObj(c) && [c.ease, c.ivl, c.reps, c.due].every((n) => typeof n === 'number'))
+        s.srs[id] = { ease: c.ease as number, ivl: c.ivl as number, reps: c.reps as number, due: c.due as number };
+  if (isObj(raw.settings)) {
+    if (typeof raw.settings.reading === 'boolean') s.settings.reading = raw.settings.reading;
+    if (typeof raw.settings.rate === 'number') s.settings.rate = raw.settings.rate;
+  }
+  if (Array.isArray(raw.history))
+    s.history = raw.history
+      .filter((h): h is AppState['history'][number] => isObj(h) && typeof h.at === 'number' && (h.kind === 'lesson' || h.kind === 'review') && LANG_SET.includes(h.lang as Lang))
+      .slice(0, HISTORY_MAX);
+  return s;
+}
+
 export function loadState(): AppState | null {
   try {
     const raw = localStorage.getItem(KEY) ?? localStorage.getItem(LEGACY_KEY);
-    if (!raw) return null;
-    const s = JSON.parse(raw) as AppState;
-    if (!s?.profile?.langs?.length) return null;
-    if (!s.profile.langs.includes(s.cur)) s.cur = s.profile.langs[0];
-    return s;
+    return raw ? normalizeState(JSON.parse(raw)) : null;
   } catch {
     return null;
   }
+}
+
+/* ---------- sao lưu ra file ---------- */
+
+const BACKUP_APP = 'ngoai-ngu';
+
+export function backupFileName(now = new Date()) {
+  return `ngoai-ngu-tien-do-${dayKey(now.getTime())}.json`;
+}
+
+export function makeBackup(s: AppState) {
+  return JSON.stringify({ app: BACKUP_APP, format: 1, exportedAt: new Date().toISOString(), state: s }, null, 2);
+}
+
+/** Đọc nội dung file sao lưu. Nhận cả file chỉ chứa state (không có lớp bọc). */
+export function parseBackup(text: string): { state: AppState; exportedAt: string | null } {
+  let data: unknown;
+  try {
+    data = JSON.parse(text);
+  } catch {
+    throw new Error('File không phải JSON hợp lệ');
+  }
+  if (isObj(data) && 'state' in data) {
+    if (data.app !== BACKUP_APP) throw new Error('Đây không phải file sao lưu của Ngoại Ngữ');
+    return { state: normalizeState(data.state), exportedAt: typeof data.exportedAt === 'string' ? data.exportedAt : null };
+  }
+  return { state: normalizeState(data), exportedAt: null };
 }
 
 export function saveState(s: AppState) {
@@ -93,6 +164,11 @@ export const todayXp = (s: AppState) => s.xp[dayKey()] || 0;
 export function streakNow(s: AppState) {
   const k = s.streak.last;
   return k === dayKey() || k === dayKey(Date.now() - DAY) ? s.streak.count : 0;
+}
+
+/** Ghi một kết quả vào đầu lịch sử. Thay đổi trực tiếp bản nháp. */
+export function pushHistory(d: AppState, entry: HistoryEntry) {
+  d.history = [entry, ...d.history].slice(0, HISTORY_MAX);
 }
 
 /** Cộng XP cho hôm nay và nối chuỗi ngày học. Thay đổi trực tiếp bản nháp. */

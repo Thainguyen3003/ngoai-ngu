@@ -1,0 +1,172 @@
+{
+  "lang": "zh",
+  "units": [
+    {
+      "id": "u1",
+      "title": "Chào hỏi",
+      "words": [
+        {
+          "w": "你好",
+          "r": "nǐ hǎo",
+          "m": "xin chào",
+          "ex": "你好，|老师！",
+          "exR": "Nǐ hǎo, lǎoshī!",
+          "exM": "Em chào thầy/cô!"
+        },
+        {
+          "w": "谢谢",
+          "r": "xiè xie",
+          "m": "cảm ơn",
+          "ex": "谢谢|你。",
+          "exR": "Xièxie nǐ.",
+          "exM": "Cảm ơn bạn."
+        },
+        {
+          "w": "再见",
+          "r": "zài jiàn",
+          "m": "tạm biệt",
+          "ex": "老师，|再见！",
+          "exR": "Lǎoshī, zàijiàn!",
+          "exM": "Tạm biệt thầy/cô!"
+        },
+        {
+          "w": "对不起",
+          "r": "duì bu qǐ",
+          "m": "xin lỗi",
+          "ex": "对不起，|我|来|晚|了。",
+          "exR": "Duìbuqǐ, wǒ lái wǎn le.",
+          "exM": "Xin lỗi, tôi đến muộn."
+        },
+        {
+          "w": "朋友",
+          "r": "péng you",
+          "m": "bạn bè",
+          "ex": "他|是|我的|朋友。",
+          "exR": "Tā shì wǒ de péngyou.",
+          "exM": "Anh ấy là bạn của tôi."
+        },
+        {
+          "w": "老师",
+          "r": "lǎo shī",
+          "m": "giáo viên",
+          "ex": "她|是|老师。",
+          "exR": "Tā shì lǎoshī.",
+          "exM": "Cô ấy là giáo viên."
+        }
+      ]
+    },
+    {
+      "id": "u2",
+      "title": "Ăn uống",
+      "words": [
+        {
+          "w": "水",
+          "r": "shuǐ",
+          "m": "nước",
+          "ex": "我|喝|水。",
+          "exR": "Wǒ hē shuǐ.",
+          "exM": "Tôi uống nước."
+        },
+        {
+          "w": "米饭",
+          "r": "mǐ fàn",
+          "m": "cơm",
+          "ex": "我|吃|米饭。",
+          "exR": "Wǒ chī mǐfàn.",
+          "exM": "Tôi ăn cơm."
+        },
+        {
+          "w": "茶",
+          "r": "chá",
+          "m": "trà",
+          "ex": "你|喝|茶|吗？",
+          "exR": "Nǐ hē chá ma?",
+          "exM": "Bạn uống trà không?"
+        },
+        {
+          "w": "吃",
+          "r": "chī",
+          "m": "ăn",
+          "ex": "我们|吃饭|吧。",
+          "exR": "Wǒmen chīfàn ba.",
+          "exM": "Chúng ta ăn cơm đi."
+        },
+        {
+          "w": "喝",
+          "r": "hē",
+          "m": "uống",
+          "ex": "你|喝|什么？",
+          "exR": "Nǐ hē shénme?",
+          "exM": "Bạn uống gì?"
+        },
+        {
+          "w": "好吃",
+          "r": "hǎo chī",
+          "m": "ngon",
+          "ex": "这个|很|好吃。",
+          "exR": "Zhège hěn hǎochī.",
+          "exM": "Món này rất ngon."
+        }
+      ]
+    },
+    {
+      "id": "u3",
+      "title": "Gia đình",
+      "words": [
+        {
+          "w": "妈妈",
+          "r": "mā ma",
+          "m": "mẹ",
+          "ex": "我|妈妈|是|老师。",
+          "exR": "Wǒ māma shì lǎoshī.",
+          "exM": "Mẹ tôi là giáo viên."
+        },
+        {
+          "w": "爸爸",
+          "r": "bà ba",
+          "m": "bố",
+          "ex": "爸爸|在|家。",
+          "exR": "Bàba zài jiā.",
+          "exM": "Bố ở nhà."
+        },
+        {
+          "w": "哥哥",
+          "r": "gē ge",
+          "m": "anh trai",
+          "ex": "我|有|一个|哥哥。",
+          "exR": "Wǒ yǒu yí ge gēge.",
+          "exM": "Tôi có một anh trai."
+        },
+        {
+          "w": "姐姐",
+          "r": "jiě jie",
+          "m": "chị gái",
+          "ex": "姐姐|喝|茶。",
+          "exR": "Jiějie hē chá.",
+          "exM": "Chị gái uống trà."
+        },
+        {
+          "w": "家",
+          "r": "jiā",
+          "m": "nhà, gia đình",
+          "ex": "我家|有|四|口|人。",
+          "exR": "Wǒ jiā yǒu sì kǒu rén.",
+          "exM": "Nhà tôi có bốn người."
+        },
+        {
+          "w": "爱",
+          "r": "ài",
+          "m": "yêu",
+          "ex": "我|爱|你。",
+          "exR": "Wǒ ài nǐ.",
+          "exM": "Tôi yêu bạn."
+        }
+      ]
+    },
+    {
+      "id": "u4",
+      "title": "Số đếm",
+      "words": []
+    }
+  ]
+}

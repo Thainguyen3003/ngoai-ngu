@@ -1,0 +1,154 @@
+{
+  "lang": "en",
+  "units": [
+    {
+      "id": "u1",
+      "title": "Chào hỏi",
+      "words": [
+        {
+          "w": "hello",
+          "r": "/həˈləʊ/",
+          "m": "xin chào",
+          "ex": "Hello,|my|name|is|Lan.",
+          "exM": "Xin chào, tôi tên là Lan."
+        },
+        {
+          "w": "goodbye",
+          "r": "/ˌɡʊdˈbaɪ/",
+          "m": "tạm biệt",
+          "ex": "Goodbye,|see|you|tomorrow.",
+          "exM": "Tạm biệt, hẹn gặp ngày mai."
+        },
+        {
+          "w": "thank you",
+          "r": "/ˈθæŋk juː/",
+          "m": "cảm ơn",
+          "ex": "Thank you|for|your|help.",
+          "exM": "Cảm ơn bạn đã giúp đỡ."
+        },
+        {
+          "w": "please",
+          "r": "/pliːz/",
+          "m": "làm ơn, vui lòng",
+          "ex": "Please|sit|down.",
+          "exM": "Mời bạn ngồi."
+        },
+        {
+          "w": "sorry",
+          "r": "/ˈsɒri/",
+          "m": "xin lỗi",
+          "ex": "Sorry,|I|am|late.",
+          "exM": "Xin lỗi, tôi đến muộn."
+        },
+        {
+          "w": "friend",
+          "r": "/frend/",
+          "m": "bạn bè",
+          "ex": "She|is|my|best|friend.",
+          "exM": "Cô ấy là bạn thân nhất của tôi."
+        }
+      ]
+    },
+    {
+      "id": "u2",
+      "title": "Ăn uống",
+      "words": [
+        {
+          "w": "water",
+          "r": "/ˈwɔːtə/",
+          "m": "nước",
+          "ex": "Can|I|have|some|water?",
+          "exM": "Cho tôi xin ít nước được không?"
+        },
+        {
+          "w": "rice",
+          "r": "/raɪs/",
+          "m": "cơm, gạo",
+          "ex": "We|eat|rice|every|day.",
+          "exM": "Chúng tôi ăn cơm mỗi ngày."
+        },
+        {
+          "w": "coffee",
+          "r": "/ˈkɒfi/",
+          "m": "cà phê",
+          "ex": "I|drink|coffee|in the morning.",
+          "exM": "Tôi uống cà phê vào buổi sáng."
+        },
+        {
+          "w": "bread",
+          "r": "/bred/",
+          "m": "bánh mì",
+          "ex": "This|bread|is|fresh.",
+          "exM": "Bánh mì này còn mới."
+        },
+        {
+          "w": "delicious",
+          "r": "/dɪˈlɪʃəs/",
+          "m": "ngon",
+          "ex": "The|soup|is|delicious.",
+          "exM": "Món súp rất ngon."
+        },
+        {
+          "w": "hungry",
+          "r": "/ˈhʌŋɡri/",
+          "m": "đói",
+          "ex": "I|am|very|hungry.",
+          "exM": "Tôi rất đói."
+        }
+      ]
+    },
+    {
+      "id": "u3",
+      "title": "Gia đình",
+      "words": [
+        {
+          "w": "mother",
+          "r": "/ˈmʌðə/",
+          "m": "mẹ",
+          "ex": "My|mother|is|a teacher.",
+          "exM": "Mẹ tôi là giáo viên."
+        },
+        {
+          "w": "father",
+          "r": "/ˈfɑːðə/",
+          "m": "bố",
+          "ex": "My|father|works|in Hanoi.",
+          "exM": "Bố tôi làm việc ở Hà Nội."
+        },
+        {
+          "w": "brother",
+          "r": "/ˈbrʌðə/",
+          "m": "anh trai, em trai",
+          "ex": "I|have|one|brother.",
+          "exM": "Tôi có một anh trai."
+        },
+        {
+          "w": "sister",
+          "r": "/ˈsɪstə/",
+          "m": "chị gái, em gái",
+          "ex": "My|sister|likes|music.",
+          "exM": "Em gái tôi thích âm nhạc."
+        },
+        {
+          "w": "family",
+          "r": "/ˈfæməli/",
+          "m": "gia đình",
+          "ex": "I|love|my|family.",
+          "exM": "Tôi yêu gia đình mình."
+        },
+        {
+          "w": "home",
+          "r": "/həʊm/",
+          "m": "nhà",
+          "ex": "Let’s|go|home.",
+          "exM": "Về nhà thôi."
+        }
+      ]
+    },
+    {
+      "id": "u4",
+      "title": "Số đếm",
+      "words": []
+    }
+  ]
+}

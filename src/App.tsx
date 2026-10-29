@@ -4,7 +4,7 @@ import { SettingsSheet } from './components/SettingsSheet';
 import { Tabs, type TabName } from './components/Tabs';
 import { COURSE, WORDS, unitById } from './data/course';
 import { newCard } from './lib/srs';
-import { addXp, baseState, clearState, demoState, dueIds, loadState, saveState, todayXp } from './lib/state';
+import { addXp, baseState, clearState, demoState, dueIds, loadState, pushHistory, saveState, todayXp } from './lib/state';
 import { speak } from './lib/tts';
 import { DAY, fmtTime } from './lib/util';
 import { Deck } from './screens/Deck';
@@ -79,8 +79,10 @@ export default function App() {
     const now = Date.now();
     const before = todayXp(S);
     const xp = st.xp + 5;
+    const acc = Math.round((100 * st.correct) / Math.max(1, st.answered));
     update((d) => {
       if (!d.done[L].includes(unit.id)) d.done[L].push(unit.id);
+      pushHistory(d, { at: now, kind: 'lesson', lang: L, unit: unit.id, acc, xp, words: unit.words.length, ms: now - t0 });
       for (const w of unit.words) {
         const missed = st.miss.includes(w.id);
         // Từ mới hẹn ôn ngày mai; từ làm sai thì ôn ngay
@@ -96,7 +98,7 @@ export default function App() {
         kind: 'lesson',
         lang: L,
         unit,
-        acc: Math.round((100 * st.correct) / Math.max(1, st.answered)),
+        acc,
         xp,
         time: fmtTime(now - t0),
         words: unit.words,
@@ -109,16 +111,21 @@ export default function App() {
 
   function finishReview(t0: number, st: ReviewStats) {
     const before = todayXp(S);
-    update((d) => addXp(d, st.xp));
+    const now = Date.now();
     const good = st.seen.filter((id) => st.grades[id] >= 2).length;
+    const acc = Math.round((100 * good) / Math.max(1, st.seen.length));
+    update((d) => {
+      addXp(d, st.xp);
+      pushHistory(d, { at: now, kind: 'review', lang: d.cur, acc, xp: st.xp, words: st.seen.length, ms: now - t0 });
+    });
     setRoute({
       name: 'result',
       result: {
         kind: 'review',
         lang: S.cur,
-        acc: Math.round((100 * good) / Math.max(1, st.seen.length)),
+        acc,
         xp: st.xp,
-        time: fmtTime(Date.now() - t0),
+        time: fmtTime(now - t0),
         words: st.seen.map((id) => WORDS[id]),
         grades: st.grades,
         goalHit: before < S.profile.goalXp && before + st.xp >= S.profile.goalXp,
@@ -228,6 +235,12 @@ export default function App() {
             setRoute({ name: 'onboard', editing: !S.profile.demo, mustFinish: false });
           }}
           onReset={resetAll}
+          onImport={(s) => {
+            setS(s);
+            setSheet(false);
+            setRoute({ name: 'home' });
+            toast('Đã nhập tiến độ từ file');
+          }}
         />
       )}
       {toastMsg && (
