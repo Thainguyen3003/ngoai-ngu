@@ -30,6 +30,7 @@ export default function App() {
   const [S, setS] = useState<AppState>(() => loadState() ?? demoState());
   const [route, setRoute] = useState<Route>({ name: 'home' });
   const [sheet, setSheet] = useState(false);
+  const [navOpen, setNavOpen] = useState(false);
   const [toastMsg, setToastMsg] = useState<string | null>(null);
   const toastTimer = useRef<number>();
 
@@ -38,7 +39,14 @@ export default function App() {
   }, [S]);
   useEffect(() => {
     window.scrollTo(0, 0);
+    setNavOpen(false);
   }, [route]);
+  useEffect(() => {
+    if (!navOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setNavOpen(false);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [navOpen]);
 
   const update = useCallback((fn: (d: AppState) => void) => {
     setS((prev) => {
@@ -206,9 +214,9 @@ export default function App() {
   return (
     <AppContext.Provider value={ctx}>
       <div className={`shell ${focus ? '' : 'has-nav'}`}>
-        {!focus && <Tabs active={route.name as TabName} onChange={goTab} />}
+        {!focus && <Tabs active={route.name as TabName} onChange={goTab} open={navOpen} onClose={() => setNavOpen(false)} />}
         <div className={`app ${focus ? 'focus' : ''}`} data-l={S.cur}>
-          {!focus && <Header onSettings={() => setSheet(true)} />}
+          {!focus && <Header onSettings={() => setSheet(true)} onMenu={() => setNavOpen(true)} menuOpen={navOpen} />}
           <main id="view">{screen}</main>
         </div>
       </div>

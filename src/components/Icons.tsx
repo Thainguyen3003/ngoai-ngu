@@ -59,6 +59,11 @@ export const IconLock = () => (
     <path d="M8 11V8a4 4 0 0 1 8 0v3" />
   </Svg>
 );
+export const IconMenu = () => (
+  <Svg>
+    <path d="M4 6.5h16M4 12h16M4 17.5h16" />
+  </Svg>
+);
 export const IconBack = () => (
   <Svg>
     <path d="M15 5l-7 7 7 7" />

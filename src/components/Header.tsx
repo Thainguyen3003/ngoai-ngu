@@ -1,12 +1,18 @@
 import { LANGS } from '../data/course';
-import { streakNow } from '../lib/state';
+import { dueIds, streakNow } from '../lib/state';
 import { useApp } from '../store';
-import { IconFlame, IconGear } from './Icons';
+import { IconFlame, IconGear, IconMenu } from './Icons';
 
-export function Header({ onSettings }: { onSettings: () => void }) {
+export function Header({ onSettings, onMenu, menuOpen }: { onSettings: () => void; onMenu: () => void; menuOpen: boolean }) {
   const { S, update } = useApp();
+  const due = dueIds(S, S.cur).length;
   return (
     <header className="top">
+      {/* Chỉ hiện trên điện thoại, nơi menu là ngăn kéo bên trái */}
+      <button className="icon-b menu-b" onClick={onMenu} aria-label="Mở menu" aria-expanded={menuOpen} aria-controls="main-nav">
+        <IconMenu />
+        {due > 0 && <span className="dot" aria-hidden="true" />}
+      </button>
       <div className="brand">
         <span className="mark" aria-hidden="true">
           <i>A</i>
