@@ -380,3 +380,18 @@ input[type="range"]{accent-color:var(--accent);width:150px}
 .dialog-actions{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
 .dialog-actions .btn{flex:1 1 140px}
 @keyframes pop-in{from{transform:translateY(8px) scale(.97);opacity:0}}
+
+/* bố cục rộng: màn ≥1024px nới vùng nội dung tới 1160px để bớt khoảng trống hai bên;
+   các màn học tập trung (.app.focus) vẫn giữ cột hẹp 680px như cuốn vở */
+.home-grid,.home-col{display:flex;flex-direction:column;gap:16px}
+@media (min-width:1024px){
+  .shell.has-nav .app{max-width:1160px;padding-left:max(40px,env(safe-area-inset-left,0px));padding-right:max(40px,env(safe-area-inset-right,0px))}
+  .shell.has-nav .hero .sub,.live-tip{max-width:70ch}
+}
+@media (min-width:1180px){
+  .home-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px;align-items:start}
+  .path{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 20px}
+  .path::before{display:none}
+  .dlist:not(.hist){grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px}
+  .tiles + .btn.wide{justify-self:start;width:auto;align-self:flex-start;padding-inline:28px}
+}
