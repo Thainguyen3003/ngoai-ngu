@@ -1,14 +1,15 @@
 import type { ReactNode } from 'react';
 import { dueIds } from '../lib/state';
 import { useApp } from '../store';
-import { IconCards, IconHome, IconMap } from './Icons';
+import { IconCards, IconHome, IconMap, IconMic } from './Icons';
 
-export type TabName = 'home' | 'path' | 'deck';
+export type TabName = 'home' | 'path' | 'deck' | 'live';
 
 const TABS: [TabName, string, ReactNode][] = [
   ['home', 'Trang chủ', <IconHome />],
   ['path', 'Lộ trình', <IconMap />],
   ['deck', 'Ôn tập', <IconCards />],
+  ['live', 'Phiên dịch', <IconMic />],
 ];
 
 interface Props {
@@ -17,10 +18,12 @@ interface Props {
   /** Trên điện thoại menu là ngăn kéo: open điều khiển việc trượt ra */
   open: boolean;
   onClose: () => void;
+  /** Màn phiên dịch đang nghe micro */
+  recording: boolean;
 }
 
 /** Menu bên trái: cột cố định trên màn rộng, ngăn kéo trượt ra trên điện thoại */
-export function Tabs({ active, onChange, open, onClose }: Props) {
+export function Tabs({ active, onChange, open, onClose, recording }: Props) {
   const { S } = useApp();
   const due = dueIds(S, S.cur).length;
   return (
@@ -49,6 +52,7 @@ export function Tabs({ active, onChange, open, onClose }: Props) {
               {icon}
               <span>{label}</span>
               {k === 'deck' && due > 0 && <span className="cnt">{due}</span>}
+              {k === 'live' && recording && <span className="rec-dot" title="Đang nghe" />}
             </button>
           ))}
         </div>

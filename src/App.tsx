@@ -10,6 +10,7 @@ import { DAY, fmtTime } from './lib/util';
 import { Deck } from './screens/Deck';
 import { Home } from './screens/Home';
 import { Lesson } from './screens/Lesson';
+import { Live } from './screens/Live';
 import { Onboarding, type OnboardAnswers } from './screens/Onboarding';
 import { Path } from './screens/Path';
 import { Quiz, type QuizStats } from './screens/Quiz';
@@ -33,6 +34,10 @@ export default function App() {
   const [navOpen, setNavOpen] = useState(false);
   const [toastMsg, setToastMsg] = useState<string | null>(null);
   const toastTimer = useRef<number>();
+  // Màn phiên dịch giữ nguyên sau lần mở đầu tiên để vẫn nghe và giữ bản ghi khi chuyển sang màn khác
+  const [liveSeen, setLiveSeen] = useState(false);
+  const [recording, setRecording] = useState(false);
+  const showLive = liveSeen || route.name === 'live';
 
   useEffect(() => {
     saveState(S);
@@ -40,6 +45,7 @@ export default function App() {
   useEffect(() => {
     window.scrollTo(0, 0);
     setNavOpen(false);
+    if (route.name === 'live') setLiveSeen(true);
   }, [route]);
   useEffect(() => {
     if (!navOpen) return;
@@ -152,7 +158,7 @@ export default function App() {
     setRoute({ name: 'onboard', editing: false, mustFinish: true });
   }
 
-  const focus = !['home', 'path', 'deck'].includes(route.name);
+  const focus = !['home', 'path', 'deck', 'live'].includes(route.name);
 
   let screen;
   switch (route.name) {
@@ -221,10 +227,17 @@ export default function App() {
   return (
     <AppContext.Provider value={ctx}>
       <div className={`shell ${focus ? '' : 'has-nav'}`}>
-        {!focus && <Tabs active={route.name as TabName} onChange={goTab} open={navOpen} onClose={() => setNavOpen(false)} />}
+        {!focus && <Tabs active={route.name as TabName} onChange={goTab} open={navOpen} onClose={() => setNavOpen(false)} recording={recording} />}
         <div className={`app ${focus ? 'focus' : ''}`} data-l={S.cur}>
           {!focus && <Header onSettings={() => setSheet(true)} onMenu={() => setNavOpen(true)} menuOpen={navOpen} />}
-          <main id="view">{screen}</main>
+          <main id="view">
+            {screen}
+            {showLive && (
+              <div className="live-wrap" hidden={route.name !== 'live'}>
+                <Live onRecording={setRecording} />
+              </div>
+            )}
+          </main>
         </div>
       </div>
       {sheet && (
