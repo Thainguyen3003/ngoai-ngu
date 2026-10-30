@@ -49,6 +49,11 @@ export const IconMic = () => (
     <path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21" />
   </Svg>
 );
+export const IconTrash = () => (
+  <Svg>
+    <path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13M10 11v5.5M14 11v5.5" />
+  </Svg>
+);
 export const IconX = () => (
   <Svg>
     <path d="M6 6l12 12M18 6 6 18" />

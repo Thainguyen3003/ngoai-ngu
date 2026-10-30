@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { ConfirmDialog } from '../components/ConfirmDialog';
 import { IconMic, IconSound } from '../components/Icons';
 import { LANGS, ORDER } from '../data/course';
 import { STT_OK, TRANSLATE_OK, getTranslator, listen, type Translator } from '../lib/live';
@@ -32,6 +33,7 @@ export function Live({ onRecording }: { onRecording: (on: boolean) => void }) {
   const [busy, setBusy] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [canTranslate, setCanTranslate] = useState(TRANSLATE_OK);
+  const [askClear, setAskClear] = useState(false);
   const stopRef = useRef<(() => void) | null>(null);
   const tr = useRef<Translator | null>(null);
   const nextId = useRef(1);
@@ -111,7 +113,9 @@ export function Live({ onRecording }: { onRecording: (on: boolean) => void }) {
   }
 
   function clear() {
-    if (window.confirm(`Xoá ${lines.length} câu đã ghi?`)) setLines([]);
+    setLines([]);
+    setAskClear(false);
+    toast('Đã xoá bản ghi');
   }
 
   const head = (
@@ -200,10 +204,27 @@ export function Live({ onRecording }: { onRecording: (on: boolean) => void }) {
         <button className="btn ghost" onClick={download} disabled={!lines.length}>
           Tải .txt
         </button>
-        <button className="btn ghost danger" onClick={clear} disabled={!lines.length || on}>
+        <button className="btn ghost danger" onClick={() => setAskClear(true)} disabled={!lines.length || on}>
           Xoá
         </button>
       </div>
+
+      {askClear && (
+        <ConfirmDialog
+          danger
+          title="Xoá bản ghi?"
+          message={
+            <>
+              {lines.length} câu đã ghi và bản dịch sẽ bị xoá, không khôi phục lại được.
+              <br />
+              Muốn giữ lại thì bấm <b>Chép</b> hoặc <b>Tải .txt</b> trước khi xoá.
+            </>
+          }
+          confirmLabel={`Xoá ${lines.length} câu`}
+          onConfirm={clear}
+          onCancel={() => setAskClear(false)}
+        />
+      )}
     </div>
   );
 }
