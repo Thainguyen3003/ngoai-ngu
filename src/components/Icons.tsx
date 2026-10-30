@@ -43,6 +43,12 @@ export const IconSound = () => (
     <path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13" />
   </Svg>
 );
+export const IconMic = () => (
+  <Svg>
+    <rect x="9" y="3" width="6" height="11" rx="3" />
+    <path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21" />
+  </Svg>
+);
 export const IconX = () => (
   <Svg>
     <path d="M6 6l12 12M18 6 6 18" />

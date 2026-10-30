@@ -58,6 +58,18 @@ Mỗi ngôn ngữ một file trong `src/data/lessons/`: `en.json`, `zh.json`, `j
 - Bài có `"words": []` hiện là "Sắp có" trên lộ trình.
 - App báo lỗi ngay khi chạy nếu file sai (trùng id bài, trùng từ, sai `lang`).
 
+## Phiên dịch trực tiếp
+
+Màn **Phiên dịch** nghe micro liên tục, chép lại từng câu người khác nói (Anh, Trung hoặc Nhật) và dịch song song sang tiếng Việt, ví dụ để theo dõi một cuộc họp.
+
+- Nhận giọng nói dùng Web Speech API của trình duyệt: cần Chrome hoặc Edge trên máy tính và có mạng (Chrome gửi âm thanh tới máy chủ Google để nhận dạng).
+- Dịch dùng Translator API có sẵn trong Chrome máy tính (bản 138 trở lên), chạy ngay trên máy. Lần đầu Chrome tải gói ngôn ngữ, nút sẽ hiện phần trăm. Trình duyệt không hỗ trợ thì chỉ chép lại lời nói, không dịch.
+- Câu được tách theo dấu câu, hoặc theo quãng ngừng khi trình duyệt không thêm dấu câu.
+- Đang nghe vẫn chuyển sang màn khác được; menu hiện chấm đỏ ở mục Phiên dịch.
+- Bản ghi chỉ nằm trong bộ nhớ của tab: tải lại trang là mất. Dùng **Chép** hoặc **Tải .txt** để giữ lại.
+
+Code: `src/lib/live.ts` (nghe, tách câu, dịch), `src/screens/Live.tsx` (màn hình).
+
 ## Tiến độ học và sao lưu
 
 Tiến độ (XP, chuỗi ngày, bài đã xong, thẻ ôn tập, lịch sử kết quả) lưu trong localStorage của trình duyệt, nên mỗi máy và mỗi trình duyệt có tiến độ riêng.
