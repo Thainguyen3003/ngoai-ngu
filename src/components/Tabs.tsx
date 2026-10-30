@@ -1,14 +1,15 @@
 import type { ReactNode } from 'react';
 import { dueIds } from '../lib/state';
 import { useApp } from '../store';
-import { IconCards, IconHome, IconMap, IconMic } from './Icons';
+import { IconCards, IconHome, IconMap, IconMic, IconSearch } from './Icons';
 
-export type TabName = 'home' | 'path' | 'deck' | 'live';
+export type TabName = 'home' | 'path' | 'deck' | 'lookup' | 'live';
 
 const TABS: [TabName, string, ReactNode][] = [
   ['home', 'Trang chủ', <IconHome />],
   ['path', 'Lộ trình', <IconMap />],
   ['deck', 'Ôn tập', <IconCards />],
+  ['lookup', 'Tra cứu', <IconSearch />],
   ['live', 'Phiên dịch', <IconMic />],
 ];
 

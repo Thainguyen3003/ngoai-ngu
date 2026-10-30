@@ -1,4 +1,4 @@
-import type { Lang, Unit, Word } from '../types';
+import type { Lang, SavedWord, Unit, Word } from '../types';
 import enJson from './lessons/en.json';
 import jaJson from './lessons/ja.json';
 import zhJson from './lessons/zh.json';
@@ -45,6 +45,19 @@ function buildUnits(lang: Lang, file: LessonFile): Unit[] {
 }
 
 export const COURSE = Object.fromEntries(ORDER.map((lang) => [lang, buildUnits(lang, FILES[lang])])) as Record<Lang, Unit[]>;
+
+/** `unit` của từ tra online đã lưu: không thuộc bài nào */
+export const ONLINE_UNIT = 'online';
+
+/**
+ * Đưa các từ tra online đã lưu vào WORDS để sổ từ và ôn tập dùng như từ trong bài học.
+ * Từ trùng với từ trong bài học thì giữ bản trong bài học.
+ */
+export function registerSavedWords(saved: Record<string, SavedWord>) {
+  for (const [id, s] of Object.entries(saved))
+    if (!WORDS[id] || WORDS[id].unit === ONLINE_UNIT)
+      WORDS[id] = { w: s.w, r: s.r, m: s.m, ex: s.ex, exR: '', exM: '', ro: '', lang: s.lang, unit: ONLINE_UNIT, id };
+}
 
 export const unitById = (lang: Lang, id: string) => COURSE[lang].find((u) => u.id === id);
 export const totalWords = (lang: Lang) => COURSE[lang].reduce((n, u) => n + u.words.length, 0);

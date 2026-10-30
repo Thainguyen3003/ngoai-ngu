@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Header } from './components/Header';
 import { SettingsSheet } from './components/SettingsSheet';
 import { Tabs, type TabName } from './components/Tabs';
-import { COURSE, WORDS, unitById } from './data/course';
+import { COURSE, WORDS, registerSavedWords, unitById } from './data/course';
 import { newCard } from './lib/srs';
 import { addXp, baseState, clearState, demoState, dueIds, loadState, pushHistory, saveState, todayXp } from './lib/state';
 import { speak } from './lib/tts';
@@ -11,6 +11,7 @@ import { Deck } from './screens/Deck';
 import { Home } from './screens/Home';
 import { Lesson } from './screens/Lesson';
 import { Live } from './screens/Live';
+import { Lookup } from './screens/Lookup';
 import { Onboarding, type OnboardAnswers } from './screens/Onboarding';
 import { Path } from './screens/Path';
 import { Quiz, type QuizStats } from './screens/Quiz';
@@ -30,6 +31,8 @@ type Route =
 export default function App() {
   const [S, setS] = useState<AppState>(() => loadState() ?? demoState());
   const [route, setRoute] = useState<Route>({ name: 'home' });
+  // Từ tra online đã lưu phải có trong WORDS trước khi sổ từ / ôn tập đọc tới
+  registerSavedWords(S.saved);
   const [sheet, setSheet] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
   const [toastMsg, setToastMsg] = useState<string | null>(null);
@@ -158,7 +161,7 @@ export default function App() {
     setRoute({ name: 'onboard', editing: false, mustFinish: true });
   }
 
-  const focus = !['home', 'path', 'deck', 'live'].includes(route.name);
+  const focus = !['home', 'path', 'deck', 'lookup', 'live'].includes(route.name);
 
   let screen;
   switch (route.name) {
@@ -170,6 +173,9 @@ export default function App() {
       break;
     case 'deck':
       screen = <Deck onReview={startReview} onPath={() => goTab('path')} />;
+      break;
+    case 'lookup':
+      screen = <Lookup onStartUnit={startLesson} />;
       break;
     case 'lesson': {
       const { unit, t0 } = route;

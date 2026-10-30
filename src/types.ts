@@ -78,6 +78,20 @@ export interface AppState {
   settings: Settings;
   /** Mới nhất ở đầu, giữ tối đa HISTORY_MAX mục */
   history: HistoryEntry[];
+  /** Từ tra online đã lưu vào sổ từ, khoá `${lang}:${w}` như từ trong bài học */
+  saved: Record<string, SavedWord>;
+}
+
+/** Từ không có trong bài học, người học tra online rồi lưu để ôn tập */
+export interface SavedWord {
+  lang: Lang;
+  w: string;
+  /** Phiên âm nếu từ điển có (IPA với tiếng Anh), có thể rỗng */
+  r: string;
+  m: string;
+  /** Câu ví dụ nếu từ điển có, có thể rỗng */
+  ex: string;
+  at: number;
 }
 
 export interface LessonResult {

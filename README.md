@@ -58,6 +58,28 @@ Mỗi ngôn ngữ một file trong `src/data/lessons/`: `en.json`, `zh.json`, `j
 - Bài có `"words": []` hiện là "Sắp có" trên lộ trình.
 - App báo lỗi ngay khi chạy nếu file sai (trùng id bài, trùng từ, sai `lang`).
 
+## Tra cứu
+
+Màn **Tra cứu** tìm từ trong tất cả bài học của cả 3 ngôn ngữ.
+
+- Gõ chữ, phiên âm, romaji hoặc nghĩa tiếng Việt; không cần dấu: `xin loi`, `nihao`, `arigato`, `茶` đều ra.
+  Gõ có dấu tiếng Việt thì chỉ tìm theo nghĩa (`ăn` không khớp nhầm với `ani`).
+- Lọc theo ngôn ngữ, mỗi nút lọc hiện số kết quả. Ô tìm để trống thì liệt kê toàn bộ từ.
+- Chi tiết từ: chữ lớn, phiên âm, nghe phát âm, câu ví dụ, trạng thái ôn tập; nút **Thêm vào ôn tập** và **Học bài N**.
+- **Tra online** (luôn hiện dưới kết quả trong bài học, tự tra sau khi ngừng gõ ~0,6 giây, gõ tiếp thì huỷ yêu cầu cũ):
+
+  | Dịch vụ | Dùng cho |
+  |---|---|
+  | [MyMemory](https://mymemory.translated.net/doc/spec.php) | Nghĩa tiếng Việt và chiều Việt → Anh/Trung/Nhật. Miễn phí khoảng 5.000 từ/ngày mỗi máy |
+  | [Free Dictionary](https://dictionaryapi.dev/) | Tiếng Anh: IPA, file phát âm, từ loại, định nghĩa, ví dụ |
+  | [Wiktionary](https://en.wiktionary.org/api/rest_v1/) | Tiếng Trung, Nhật (và dự phòng cho Anh): từ loại, định nghĩa bằng tiếng Anh. Chữ giản thể / kana tự chuyển sang trang chính qua `{{zh-see}}` / `{{ja-see}}` |
+
+  Các dịch vụ đều cho gọi thẳng từ trình duyệt (có CORS), không cần máy chủ riêng. Ngôn ngữ của từ được đoán tự động (kana → Nhật, chữ Hán → Trung, có dấu tiếng Việt → Việt, còn lại → Anh) và đổi lại được.
+  MyMemory lỗi hoặc hết lượt thì dùng bộ dịch trên máy của Chrome (Translator API) nếu có. Jisho chặn CORS nên chưa dùng.
+- **Lưu vào sổ từ**: từ tra online được lưu trong `saved` của tiến độ (đi theo file sao lưu) và vào ôn tập như từ trong bài học.
+
+Code: `src/lib/lookup.ts` (chuẩn hoá bỏ dấu, chấm điểm khớp, đoán ngôn ngữ), `src/lib/online.ts` (gọi các dịch vụ online), `src/screens/Lookup.tsx` (màn hình).
+
 ## Phiên dịch trực tiếp
 
 Màn **Phiên dịch** nghe micro liên tục, chép lại từng câu người khác nói (Anh, Trung hoặc Nhật) và dịch song song sang tiếng Việt, ví dụ để theo dõi một cuộc họp.
@@ -72,7 +94,7 @@ Code: `src/lib/live.ts` (nghe, tách câu, dịch), `src/screens/Live.tsx` (màn
 
 ## Tiến độ học và sao lưu
 
-Tiến độ (XP, chuỗi ngày, bài đã xong, thẻ ôn tập, lịch sử kết quả) lưu trong localStorage của trình duyệt, nên mỗi máy và mỗi trình duyệt có tiến độ riêng.
+Tiến độ (XP, chuỗi ngày, bài đã xong, thẻ ôn tập, lịch sử kết quả, từ tra online đã lưu) lưu trong localStorage của trình duyệt, nên mỗi máy và mỗi trình duyệt có tiến độ riêng.
 
 Để mang tiến độ sang máy khác: **Cài đặt → Sao lưu tiến độ → Xuất ra file** ở máy cũ, được file `ngoai-ngu-tien-do-<ngày>.json`. Sang máy mới chọn **Nhập từ file**, app hiện tóm tắt nội dung file và hỏi lại trước khi thay tiến độ hiện tại.
 

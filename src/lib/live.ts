@@ -105,17 +105,27 @@ export function listen(lang: Lang, h: ListenHandlers) {
   };
 }
 
-const cache: Partial<Record<Lang, Translator>> = {};
+const cache: Record<string, Translator> = {};
+
+/** Mã ngôn ngữ cho Translator API: 'vi' hoặc mã hai chữ của một ngôn ngữ đang học */
+export type TrLang = Lang | 'vi';
+const code = (l: TrLang) => (l === 'vi' ? 'vi' : LANGS[l].tts.slice(0, 2));
 
 /**
  * Bộ dịch sang tiếng Việt chạy trên máy (Translator API của Chrome). Trả về null nếu trình duyệt không hỗ trợ.
  * Lần đầu Chrome phải tải gói ngôn ngữ, việc này chỉ được phép ngay sau khi người dùng bấm nút.
  */
-export async function getTranslator(lang: Lang, onProgress?: (pct: number) => void): Promise<Translator | null> {
-  if (cache[lang]) return cache[lang]!;
+export function getTranslator(lang: Lang, onProgress?: (pct: number) => void) {
+  return getTranslatorPair(lang, 'vi', onProgress);
+}
+
+/** Như getTranslator nhưng chọn được cả hai chiều, ví dụ ('vi', 'ja') để dịch tiếng Việt sang tiếng Nhật */
+export async function getTranslatorPair(from: TrLang, to: TrLang, onProgress?: (pct: number) => void): Promise<Translator | null> {
+  const key = `${from}>${to}`;
+  if (cache[key]) return cache[key];
   const T = W.Translator;
   if (!T) return null;
-  const opts = { sourceLanguage: LANGS[lang].tts.slice(0, 2), targetLanguage: 'vi' };
+  const opts = { sourceLanguage: code(from), targetLanguage: code(to) };
   try {
     // Có trình duyệt nhúng không bao giờ trả lời câu hỏi này: quá 5 giây thì coi như không dịch được
     const timeout = new Promise<Availability>((ok) => window.setTimeout(() => ok('unavailable'), 5000));
@@ -124,7 +134,7 @@ export async function getTranslator(lang: Lang, onProgress?: (pct: number) => vo
       ...opts,
       monitor: (m) => m.addEventListener('downloadprogress', (e) => onProgress?.(Math.round((e as ProgressEvent).loaded * 100))),
     });
-    cache[lang] = tr;
+    cache[key] = tr;
     return tr;
   } catch {
     return null;

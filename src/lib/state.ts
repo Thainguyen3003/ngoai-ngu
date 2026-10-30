@@ -17,6 +17,7 @@ export function baseState(profile: Profile): AppState {
     srs: {},
     settings: { reading: true, rate: 0.9 },
     history: [],
+    saved: {},
   };
 }
 
@@ -84,6 +85,10 @@ export function normalizeState(raw: unknown): AppState {
     s.history = raw.history
       .filter((h): h is AppState['history'][number] => isObj(h) && typeof h.at === 'number' && (h.kind === 'lesson' || h.kind === 'review') && LANG_SET.includes(h.lang as Lang))
       .slice(0, HISTORY_MAX);
+  if (isObj(raw.saved))
+    for (const [id, w] of Object.entries(raw.saved))
+      if (isObj(w) && LANG_SET.includes(w.lang as Lang) && typeof w.w === 'string' && typeof w.m === 'string')
+        s.saved[id] = { lang: w.lang as Lang, w: w.w, m: w.m, r: typeof w.r === 'string' ? w.r : '', ex: typeof w.ex === 'string' ? w.ex : '', at: typeof w.at === 'number' ? w.at : 0 };
   return s;
 }
 
@@ -150,7 +155,8 @@ export function unitStatus(s: AppState, lang: Lang, u: Unit): UnitStatus {
   return u === nextUnit(s, lang) ? 'current' : 'locked';
 }
 
-export const learnedCount = (s: AppState, lang: Lang) => Object.keys(s.srs).filter((id) => id.startsWith(lang + ':')).length;
+/** Số từ trong bài học đã học (không tính từ tra online đã lưu, để khớp với tổng số từ của lộ trình) */
+export const learnedCount = (s: AppState, lang: Lang) => Object.keys(s.srs).filter((id) => id.startsWith(lang + ':') && !s.saved[id]).length;
 
 export function dueIds(s: AppState, lang: Lang, now = Date.now()) {
   return Object.entries(s.srs)

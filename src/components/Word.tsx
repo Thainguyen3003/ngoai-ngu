@@ -30,7 +30,8 @@ export function BigGlyph({ w, reading, max = 104 }: { w: Word; reading?: boolean
 
 export function ReadingLine({ w, reading }: { w: Word; reading?: boolean }) {
   const { S } = useApp();
-  if (!(reading ?? S.settings.reading)) return null;
+  // Từ tra online lưu lại có thể không có phiên âm
+  if (!(reading ?? S.settings.reading) || !(w.r || w.ro)) return null;
   if (w.lang === 'en') return <p className="reading">{w.r}</p>;
   if (w.lang === 'zh')
     return (
@@ -74,6 +75,8 @@ export function Example({ w, reading }: { w: Word; reading?: boolean }) {
   const { S, say } = useApp();
   const rd = reading ?? S.settings.reading;
   const text = exText(w);
+  // Từ tra online lưu lại có thể không có câu ví dụ
+  if (!text) return null;
   return (
     <div className="ex">
       <div className="ex-head">
@@ -86,7 +89,7 @@ export function Example({ w, reading }: { w: Word; reading?: boolean }) {
         <Highlight text={text} word={w.w} />
       </p>
       {w.exR && rd && <p className="ex-r">{w.exR}</p>}
-      <p className="ex-m">{w.exM}</p>
+      {w.exM && <p className="ex-m">{w.exM}</p>}
     </div>
   );
 }
